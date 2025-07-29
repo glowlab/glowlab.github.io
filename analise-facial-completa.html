@@ -1053,7 +1053,45 @@
             ctx.shadowBlur = 0;
         }
 
-        function performFaceAnalysis(landmarks) {
+        async function performFaceAnalysis(landmarks) {
+            // Enviar dados para IA treinada no servidor
+            try {
+                const landmarkData = landmarks.map(point => ({
+                    x: point.x,
+                    y: point.y,
+                    z: point.z || 0
+                }));
+
+                // 🤖 ENVIAR PARA IA TREINADA NO SERVIDOR
+                const response = await fetch(`${SERVER_URL}/api/analyze-face`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${await currentUser?.getIdToken()}`
+                    },
+                    body: JSON.stringify({
+                        landmarks: landmarkData,
+                        userId: currentUser?.uid,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+
+                if (response.ok) {
+                    const aiAnalysis = await response.json();
+                    updateResults('IA Treinada - Análise Completa', aiAnalysis);
+                } else {
+                    // Fallback para análise local se servidor estiver offline
+                    console.warn('Servidor offline, usando análise local');
+                    performLocalAnalysis(landmarks);
+                }
+            } catch (error) {
+                console.error('Erro ao conectar com IA:', error);
+                // Fallback para análise local
+                performLocalAnalysis(landmarks);
+            }
+        }
+
+        function performLocalAnalysis(landmarks) {
             const analysis = {
                 symmetry: calculateSymmetry(landmarks),
                 proportions: calculateProportions(landmarks),
@@ -1061,7 +1099,7 @@
                 timestamp: new Date()
             };
 
-            updateResults('Análise completa', analysis);
+            updateResults('Análise Local', analysis);
         }
 
         function calculateSymmetry(landmarks) {
