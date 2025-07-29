@@ -824,16 +824,28 @@
         }
 
         function drawLandmarks(landmarks) {
-            // Draw face outline
+            // Limpar canvas com efeito suave
+            ctx.globalAlpha = 0.1;
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.globalAlpha = 1.0;
+            
+            // 🎯 CONTORNO FACIAL COMPLETO que GRUDA no rosto
+            const faceContour = [
+                10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 
+                397, 365, 379, 378, 400, 377, 152, 148, 176, 149, 150, 136, 
+                172, 58, 132, 93, 234, 127, 162, 21, 54, 103, 67, 109, 10
+            ];
+            
+            // Desenhar contorno facial com gradiente
             ctx.strokeStyle = '#00d4ff';
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#00d4ff';
             ctx.beginPath();
             
-            // Face contour
-            const faceOval = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 378, 400, 377, 152, 148, 176, 149, 150, 136, 172, 58, 132, 93, 234, 127, 162, 21, 54, 103, 67, 109];
-            
-            for (let i = 0; i < faceOval.length; i++) {
-                const point = landmarks[faceOval[i]];
+            for (let i = 0; i < faceContour.length; i++) {
+                const point = landmarks[faceContour[i]];
                 const x = point.x * canvas.width;
                 const y = point.y * canvas.height;
                 
@@ -844,40 +856,201 @@
                 }
             }
             ctx.stroke();
+            ctx.shadowBlur = 0;
 
-            // Draw key points
-            const keyPoints = [
-                { indices: [33, 263], color: '#ff6b6b', label: 'Olhos' }, // Eyes
-                { indices: [1, 2], color: '#4ecdc4', label: 'Nariz' }, // Nose
-                { indices: [61, 291], color: '#ffe66d', label: 'Boca' }, // Mouth corners
-                { indices: [10, 151], color: '#ff9ff3', label: 'Face' } // Face center points
-            ];
+            // 👁️ OLHOS DETALHADOS que SEGUEM o movimento
+            drawEyeDetailed(landmarks, 'left');
+            drawEyeDetailed(landmarks, 'right');
+            
+            // 👃 NARIZ COMPLETO
+            drawNoseDetailed(landmarks);
+            
+            // 👄 BOCA DETALHADA
+            drawMouthDetailed(landmarks);
+            
+            // 📏 LINHA DE SIMETRIA DINÂMICA
+            drawSymmetryLine(landmarks);
+            
+            // 🎯 PONTOS DE REFERÊNCIA BRILHANTES
+            drawGlowingPoints(landmarks);
+        }
 
-            keyPoints.forEach(group => {
-                ctx.fillStyle = group.color;
-                group.indices.forEach(index => {
-                    const point = landmarks[index];
+        function drawEyeDetailed(landmarks, side) {
+            const eyePoints = side === 'left' ? 
+                [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246] :
+                [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398];
+            
+            // Contorno do olho
+            ctx.strokeStyle = side === 'left' ? '#ff6b6b' : '#4ecdc4';
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = ctx.strokeStyle;
+            
+            ctx.beginPath();
+            for (let i = 0; i < eyePoints.length; i++) {
+                const point = landmarks[eyePoints[i]];
+                const x = point.x * canvas.width;
+                const y = point.y * canvas.height;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Ponto central do olho brilhante
+            const centerPoint = side === 'left' ? landmarks[468] : landmarks[473];
+            if (centerPoint) {
+                ctx.fillStyle = ctx.strokeStyle;
+                ctx.shadowBlur = 10;
+                ctx.beginPath();
+                ctx.arc(centerPoint.x * canvas.width, centerPoint.y * canvas.height, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            ctx.shadowBlur = 0;
+        }
+
+        function drawNoseDetailed(landmarks) {
+            const nosePoints = [1, 2, 5, 4, 6, 168, 8, 9, 10, 151, 195, 197, 196, 3, 51, 48, 115, 131, 134, 102, 49, 220, 305, 292, 308, 415, 310, 311, 312, 13, 82, 81, 80, 78];
+            
+            ctx.strokeStyle = '#ffe66d';
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = '#ffe66d';
+            
+            ctx.beginPath();
+            for (let i = 0; i < nosePoints.length; i++) {
+                const point = landmarks[nosePoints[i]];
+                if (point) {
                     const x = point.x * canvas.width;
                     const y = point.y * canvas.height;
                     
-                    ctx.beginPath();
-                    ctx.arc(x, y, 3, 0, 2 * Math.PI);
-                    ctx.fill();
-                });
-            });
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+            }
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
 
-            // Draw symmetry line
+        function drawMouthDetailed(landmarks) {
+            // Contorno externo da boca
+            const mouthOuter = [61, 84, 17, 314, 405, 320, 307, 375, 321, 308, 324, 318, 402, 317, 14, 87, 178, 88, 95, 78, 81, 80, 78];
+            // Contorno interno da boca
+            const mouthInner = [78, 95, 88, 178, 87, 14, 317, 402, 318, 324, 308, 324, 318];
+            
+            // Boca externa
+            ctx.strokeStyle = '#ff9ff3';
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = '#ff9ff3';
+            
+            ctx.beginPath();
+            for (let i = 0; i < mouthOuter.length; i++) {
+                const point = landmarks[mouthOuter[i]];
+                if (point) {
+                    const x = point.x * canvas.width;
+                    const y = point.y * canvas.height;
+                    
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+            }
+            ctx.stroke();
+            
+            // Cantos da boca brilhantes
+            const leftCorner = landmarks[61];
+            const rightCorner = landmarks[291];
+            
+            ctx.fillStyle = '#ff9ff3';
+            ctx.shadowBlur = 8;
+            
+            if (leftCorner) {
+                ctx.beginPath();
+                ctx.arc(leftCorner.x * canvas.width, leftCorner.y * canvas.height, 3, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            if (rightCorner) {
+                ctx.beginPath();
+                ctx.arc(rightCorner.x * canvas.width, rightCorner.y * canvas.height, 3, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            ctx.shadowBlur = 0;
+        }
+
+        function drawSymmetryLine(landmarks) {
             const noseTop = landmarks[10];
             const chinBottom = landmarks[152];
             
+            // Linha principal
             ctx.strokeStyle = '#ffff00';
             ctx.lineWidth = 2;
-            ctx.setLineDash([5, 5]);
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#ffff00';
+            ctx.setLineDash([10, 5]);
+            
             ctx.beginPath();
             ctx.moveTo(noseTop.x * canvas.width, noseTop.y * canvas.height);
             ctx.lineTo(chinBottom.x * canvas.width, chinBottom.y * canvas.height);
             ctx.stroke();
+            
+            // Marcadores de simetria
             ctx.setLineDash([]);
+            ctx.fillStyle = '#ffff00';
+            ctx.beginPath();
+            ctx.arc(noseTop.x * canvas.width, noseTop.y * canvas.height, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(chinBottom.x * canvas.width, chinBottom.y * canvas.height, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+        }
+
+        function drawGlowingPoints(landmarks) {
+            // Pontos chave com brilho
+            const keyPoints = [
+                { index: 10, color: '#00ff00', label: 'Topo' },     // Topo da testa
+                { index: 152, color: '#00ff00', label: 'Queixo' },  // Queixo
+                { index: 234, color: '#ff0080', label: 'Esquerda' }, // Lado esquerdo
+                { index: 454, color: '#ff0080', label: 'Direita' },  // Lado direito
+                { index: 1, color: '#ffffff', label: 'Centro' },     // Centro do nariz
+            ];
+            
+            keyPoints.forEach(kp => {
+                const point = landmarks[kp.index];
+                if (point) {
+                    ctx.fillStyle = kp.color;
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = kp.color;
+                    
+                    ctx.beginPath();
+                    ctx.arc(point.x * canvas.width, point.y * canvas.height, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    // Texto do ponto
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '12px Arial';
+                    ctx.shadowBlur = 3;
+                    ctx.shadowColor = '#000000';
+                    ctx.fillText(kp.label, (point.x * canvas.width) + 10, (point.y * canvas.height) - 10);
+                }
+            });
+            
+            ctx.shadowBlur = 0;
         }
 
         function performFaceAnalysis(landmarks) {
