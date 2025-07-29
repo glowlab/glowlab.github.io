@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: glowlab-ai-backend
+    runtime: python3
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: MONGO_URL
+        value: mongodb://localhost:27017
+      - key: DB_NAME
+        value: glowlab_db
+    healthCheckPath: /api/ai-status
