@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto - Supremacy Baggy</title>
+    <meta name="description" content="Detalhes do produto - Supremacy Baggy">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Oswald', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 40px;
+            filter: invert(1);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-icon:hover {
+            background: #333;
+            transform: scale(1.1);
+        }
+
+        .btn-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Product Images */
+        .product-images {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 500px;
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .main-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .thumbnail {
+            min-width: 80px;
+            height: 80px;
+            background: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .thumbnail.active {
+            border-color: #fff;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Product Info */
+        .product-info {
+            padding: 1rem 0;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Variations */
+        .variation-group {
+            margin-bottom: 2rem;
+        }
+
+        .variation-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .variation-options {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .variation-option {
+            padding: 0.8rem 1.2rem;
+            background: #222;
+            border: 2px solid #444;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .variation-option:hover {
+            border-color: #666;
+        }
+
+        .variation-option.selected {
+            border-color: #fff;
+            background: #333;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #444;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .color-option.selected {
+            border-color: #fff;
+            transform: scale(1.1);
+        }
+
+        .color-option::after {
+            content: attr(data-color);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        /* Quantity */
+        .quantity-group {
+            margin-bottom: 2rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #555;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        /* Actions */
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Product Video */
+        .product-video {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .product-video iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+
+        /* Shipping Info */
+        .shipping-info {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .shipping-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .shipping-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .shipping-option:last-child {
+            border-bottom: none;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: #333;
+            transform: scale(1.1);
+        }
+
+        .back-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .product-title {
+                font-size: 2rem;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .back-btn {
+                left: 1rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            color: #dc3545;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <img src="https://i.imgur.com/ZMOggly.png" alt="Supremacy Baggy" class="logo" id="header-logo">
+            <div class="header-actions">
+                <button class="btn-icon" onclick="toggleWishlist()" id="wishlist-btn">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </button>
+                <button class="btn-icon" onclick="goToCart()">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <button class="back-btn" onclick="goBack()">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div id="product-container">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbGwo74XhjxyorPEvz3WHZgGV6BESGZw8",
+            authDomain: "supbaggy.firebaseapp.com",
+            databaseURL: "https://supbaggy-default-rtdb.firebaseio.com",
+            projectId: "supbaggy",
+            storageBucket: "supbaggy.firebasestorage.app",
+            messagingSenderId: "304795544101",
+            appId: "1:304795544101:web:5de2ecc82c07fd9fe42dcc"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const analytics = firebase.analytics();
+
+        // Global variables
+        let currentProduct = null;
+        let currentUser = null;
+        let selectedVariations = {};
+        let quantity = 1;
+        let currentImageIndex = 0;
+
+        // Auth check
+        function checkAuth() {
+            auth.onAuthStateChanged(user => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                currentUser = user;
+                loadSiteConfig();
+                loadProduct();
+                checkWishlistStatus();
+            });
+        }
+
+        // Load site configuration
+        function loadSiteConfig() {
+            database.ref('config').once('value', snapshot => {
+                const config = snapshot.val();
+                if (config && config.logoUrl) {
+                    document.getElementById('header-logo').src = config.logoUrl;
+                }
+            });
+        }
+
+        // Get product ID from URL hash
+        function getProductId() {
+            return window.location.hash.substring(1);
+        }
+
+        // Load product data
+        function loadProduct() {
+            const productId = getProductId();
+            
+            if (!productId) {
+                showError('Produto não encontrado');
+                return;
+            }
+
+            database.ref(`products/${productId}`).once('value', snapshot => {
+                const product = snapshot.val();
+                
+                if (!product || !product.active) {
+                    showError('Produto não encontrado ou indisponível');
+                    return;
+                }
+
+                currentProduct = product;
+                renderProduct(product);
+                
+                // Analytics
+                analytics.logEvent('view_item', {
+                    item_id: product.id,
+                    item_name: product.title,
+                    item_category: product.category,
+                    price: product.price
+                });
+            });
+        }
+
+        // Render product
+        function renderProduct(product) {
+            const container = document.getElementById('product-container');
+            
+            // Update page title
+            document.title = `${product.title} - Supremacy Baggy`;
+            
+            const variations = product.variations || {};
+            const colors = variations.cores || [];
+            const sizes = variations.tamanhos || [];
+            
+            container.innerHTML = `
+                <div class="product-container">
+                    <div class="product-images">
+                        <div class="main-image">
+                            <img id="main-product-image" src="${product.images[0] || '/placeholder.svg?height=500&width=500'}" 
+                                 alt="${product.title}">
+                        </div>
+                        ${product.images.length > 1 ? `
+                            <div class="image-thumbnails">
+                                ${product.images.map((img, index) => `
+                                    <div class="thumbnail ${index === 0 ? 'active' : ''}" 
+                                         onclick="changeImage(${index})">
+                                        <img src="${img}" alt="${product.title}">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="product-info">
+                        <h1 class="product-title">${product.title}</h1>
+                        <div class="product-price">R$ ${product.price.toFixed(2)}</div>
+                        <p class="product-description">${product.description}</p>
+                        
+                        ${colors.length > 0 ? `
+                            <div class="variation-group">
+                                <div class="variation-label">Cores</div>
+                                <div class="variation-options">
+                                    ${colors.map(color => `
+                                        <div class="color-option" 
+                                             data-color="${color}"
+                                             style="background-color: ${getColorValue(color)}"
+                                             onclick="selectVariation('cor', '${color}')">
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        ${sizes.length > 0 ? `
+                            <div class="variation-group">
+                                <div class="variation-label">Tamanhos</div>
+                                <div class="variation-options">
+                                    ${sizes.map(size => `
+                                        <div class="variation-option" 
+                                             onclick="selectVariation('tamanho', '${size}')">
+                                            ${size}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="quantity-group">
+                            <div class="variation-label">Quantidade</div>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" class="quantity-input" id="quantity-input" 
+                                       value="1" min="1" max="10" onchange="updateQuantity()">
+                                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="buyProduct()">
+                                Comprar Agora
+                            </button>
+                            <button class="btn btn-secondary" onclick="addToCart()">
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                        
+                        ${product.video ? `
+                            <div class="product-video">
+                                <iframe src="${getVideoEmbedUrl(product.video)}" 
+                                        allowfullscreen></iframe>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="shipping-info">
+                            <div class="shipping-title">Informações de Frete</div>
+                            <div class="shipping-option">
+                                <span>Tipo:</span>
+                                <span>${getShippingText(product.frete)}</span>
+                            </div>
+                            ${product.frete.tipo === 'fixo' ? `
+                                <div class="shipping-option">
+                                    <span>Valor:</span>
+                                    <span>R$ ${product.frete.valor.toFixed(2)}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper functions
+        function getColorValue(colorName) {
+            const colorMap = {
+                'preto': '#000000',
+                'branco': '#ffffff',
+                'cinza': '#808080',
+                'azul': '#0066cc',
+                'vermelho': '#cc0000',
+                'verde': '#00cc00',
+                'amarelo': '#ffcc00',
+                'rosa': '#ff69b4',
+                'roxo': '#8a2be2'
+            };
+            return colorMap[colorName.toLowerCase()] || '#666666';
+        }
+
+        function getVideoEmbedUrl(videoUrl) {
+            if (videoUrl.includes('youtube.com/watch')) {
+                const videoId = videoUrl.split('v=')[1]?.split('&')[0];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            if (videoUrl.includes('youtu.be/')) {
+                const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            return videoUrl;
+        }
+
+        function getShippingText(frete) {
+            switch (frete.tipo) {
+                case 'gratis': return 'Grátis';
+                case 'fixo': return 'Valor fixo';
+                case 'determinar': return 'A determinar';
+                default: return 'Consultar';
+            }
+        }
+
+        // Image functions
+        function changeImage(index) {
+            if (!currentProduct || !currentProduct.images[index]) return;
+            
+            currentImageIndex = index;
+            document.getElementById('main-product-image').src = currentProduct.images[index];
+            
+            // Update thumbnails
+            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        }
+
+        // Variation functions
+        function selectVariation(type, value) {
+            selectedVariations[type] = value;
+            
+            // Update UI
+            document.querySelectorAll('.variation-option, .color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            event.target.classList.add('selected');
+        }
+
+        // Quantity functions
+        function changeQuantity(delta) {
+            const input = document.getElementById('quantity-input');
+            const newValue = parseInt(input.value) + delta;
+            
+            if (newValue >= 1 && newValue <= 10) {
+                input.value = newValue;
+                quantity = newValue;
+            }
+        }
+
+        function updateQuantity() {
+            const input = document.getElementById('quantity-input');
+            quantity = Math.max(1, Math.min(10, parseInt(input.value) || 1));
+            input.value = quantity;
+        }
+
+        // Wishlist functions
+        function checkWishlistStatus() {
+            if (!currentUser || !currentProduct) return;
+            
+            database.ref(`users/${currentUser.uid}/wishlist/${currentProduct.id}`).once('value', snapshot => {
+                const isInWishlist = snapshot.exists();
+                updateWishlistButton(isInWishlist);
+            });
+        }
+
+        function updateWishlistButton(isInWishlist) {
+            const btn = document.getElementById('wishlist-btn');
+            if (isInWishlist) {
+                btn.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+                btn.style.color = '#ff4757';
+            } else {
+                btn.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+                btn.style.color = '#fff';
+            }
+        }
+
+        function toggleWishlist() {
+            if (!currentUser || !currentProduct) return;
+            
+            const wishlistRef = database.ref(`users/${currentUser.uid}/wishlist/${currentProduct.id}`);
+            
+            wishlistRef.once('value', snapshot => {
+                if (snapshot.exists()) {
+                    // Remove from wishlist
+                    wishlistRef.remove();
+                    updateWishlistButton(false);
+                    
+                    analytics.logEvent('remove_from_wishlist', {
+                        item_id: currentProduct.id,
+                        item_name: currentProduct.title
+                    });
+                } else {
+                    // Add to wishlist
+                    wishlistRef.set({
+                        id: currentProduct.id,
+                        title: currentProduct.title,
+                        price: currentProduct.price,
+                        image: currentProduct.images[0],
+                        addedAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    updateWishlistButton(true);
+                    
+                    analytics.logEvent('add_to_wishlist', {
+                        item_id: currentProduct.id,
+                        item_name: currentProduct.title,
+                        price: currentProduct.price
+                    });
+                }
+            });
+        }
+
+        // Cart functions
+        function addToCart() {
+            if (!currentUser || !currentProduct) return;
+            
+            const cartItem = {
+                id: currentProduct.id,
+                title: currentProduct.title,
+                price: currentProduct.price,
+                image: currentProduct.images[0],
+                quantity: quantity,
+                variations: selectedVariations,
+                frete: currentProduct.frete,
+                addedAt: firebase.database.ServerValue.TIMESTAMP
+            };
+            
+            database.ref(`users/${currentUser.uid}/cart/${currentProduct.id}`).set(cartItem)
+                .then(() => {
+                    alert('Produto adicionado ao carrinho!');
+                    
+                    analytics.logEvent('add_to_cart', {
+                        item_id: currentProduct.id,
+                        item_name: currentProduct.title,
+                        price: currentProduct.price,
+                        quantity: quantity
+                    });
+                });
+        }
+
+        // Buy function
+        function buyProduct() {
+            if (!currentProduct) return;
+            
+            const variations = Object.entries(selectedVariations)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(', ');
+            
+            const shippingText = getShippingText(currentProduct.frete);
+            const shippingCost = currentProduct.frete.tipo === 'fixo' ? currentProduct.frete.valor : 0;
+            const total = (currentProduct.price * quantity) + shippingCost;
+            
+            const message = `
+🛍️ *PEDIDO SUPREMACY BAGGY*
+
+📦 *Produto:* ${currentProduct.title}
+💰 *Preço unitário:* R$ ${currentProduct.price.toFixed(2)}
+📊 *Quantidade:* ${quantity}
+${variations ? `🎨 *Variações:* ${variations}` : ''}
+🚚 *Frete:* ${shippingText}${currentProduct.frete.tipo === 'fixo' ? ` (R$ ${shippingCost.toFixed(2)})` : ''}
+💳 *Total:* R$ ${total.toFixed(2)}
+
+🔗 *Link do produto:* ${window.location.href}
+            `.trim();
+            
+            const whatsappUrl = `https://wa.me/559781084662?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // Analytics
+            analytics.logEvent('purchase_intent', {
+                item_id: currentProduct.id,
+                item_name: currentProduct.title,
+                price: currentProduct.price,
+                quantity: quantity,
+                total: total
+            });
+        }
+
+        // Navigation functions
+        function goBack() {
+            if (document.referrer && document.referrer.includes(window.location.hostname)) {
+                history.back();
+            } else {
+                window.location.href = 'paginahome.html';
+            }
+        }
+
+        function goToCart() {
+            window.location.href = 'carrinho.html';
+        }
+
+        // Error handling
+        function showError(message) {
+            document.getElementById('product-container').innerHTML = `
+                <div class="error-message">
+                    <h2>Ops!</h2>
+                    <p>${message}</p>
+                    <button class="btn btn-primary" onclick="goBack()" style="margin-top: 1rem;">
+                        Voltar
+                    </button>
+                </div>
+            `;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+        });
+
+        // Handle hash changes
+        window.addEventListener('hashchange', () => {
+            loadProduct();
+        });
+    </script>
+</body>
+</html>

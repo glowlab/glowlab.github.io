@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supremacy Baggy - Street Fashion</title>
+    <meta name="description" content="Supremacy Baggy - Moda street premium para o público jovem">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Oswald', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #splash-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        #main-content {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #main-content.show {
+            opacity: 1;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 40px;
+            filter: invert(1);
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: #000;
+            border-left: 1px solid #333;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            padding: 2rem;
+        }
+
+        .nav-menu.open {
+            right: 0;
+        }
+
+        .nav-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 2rem;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ccc;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .banner {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 100vw;
+            height: clamp(300px, 50vh, 600px);
+            background: #111;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner.active {
+            display: flex;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-width: 100%;
+        }
+
+        .products-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .products-section.no-banner {
+            margin-top: 80px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .product-variations {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .variation-item {
+            padding: 0.3rem 0.8rem;
+            background: #333;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        #particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .products-section {
+                padding: 2rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .banner {
+                height: clamp(200px, 40vh, 400px);
+                margin-top: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner {
+                height: clamp(180px, 35vh, 300px);
+                margin-top: 65px;
+            }
+            
+            .header {
+                padding: 0.75rem;
+            }
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="splash-screen">
+        <canvas id="splash-canvas"></canvas>
+    </div>
+
+    <canvas id="particles-bg"></canvas>
+
+    <div id="main-content">
+        <header class="header">
+            <div class="header-content">
+                <img src="https://i.imgur.com/ZMOggly.png" alt="Supremacy Baggy" class="logo" id="header-logo">
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            </div>
+        </header>
+
+        <nav class="nav-menu" id="nav-menu">
+            <button class="nav-close" onclick="toggleMenu()">✕</button>
+            <ul class="nav-links">
+                <li><a href="paginahome.html">Home</a></li>
+                <li><a href="categorias.html">Categorias</a></li>
+                <li><a href="produtosgeral.html">Produtos</a></li>
+                <li><a href="favoritos.html">Favoritos</a></li>
+                <li><a href="carrinho.html">Carrinho</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+                <li id="admin-link" style="display: none;"><a href="paineladmin.html">Painel Admin</a></li>
+                <li><a href="#" onclick="logout()">Sair</a></li>
+            </ul>
+        </nav>
+
+        <section class="banner" id="banner-section">
+            <img id="banner-image" src="/placeholder.svg" alt="Banner">
+        </section>
+
+        <section class="products-section" id="products-section">
+            <h2 class="section-title">Produtos em Destaque</h2>
+            <div id="products-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbGwo74XhjxyorPEvz3WHZgGV6BESGZw8",
+            authDomain: "supbaggy.firebaseapp.com",
+            databaseURL: "https://supbaggy-default-rtdb.firebaseio.com",
+            projectId: "supbaggy",
+            storageBucket: "supbaggy.firebasestorage.app",
+            messagingSenderId: "304795544101",
+            appId: "1:304795544101:web:5de2ecc82c07fd9fe42dcc"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const analytics = firebase.analytics();
+
+        let scene, camera, renderer, particles, logo;
+        let splashComplete = false;
+
+        function initSplash() {
+            const canvas = document.getElementById('splash-canvas');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 1);
+
+            const logoGeometry = new THREE.PlaneGeometry(4, 2);
+            const logoTexture = new THREE.TextureLoader().load('https://i.imgur.com/ZMOggly.png');
+            const logoMaterial = new THREE.MeshBasicMaterial({ 
+                map: logoTexture, 
+                transparent: true,
+                opacity: 0
+            });
+            logo = new THREE.Mesh(logoGeometry, logoMaterial);
+            scene.add(logo);
+
+            const particleCount = 1000;
+            const particleGeometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+
+                colors[i * 3] = 1;
+                colors[i * 3 + 1] = 1;
+                colors[i * 3 + 2] = 1;
+
+                sizes[i] = Math.random() * 5 + 1;
+            }
+
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const particleMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 }
+                },
+                vertexShader: `
+                    attribute float size;
+                    varying vec3 vColor;
+                    uniform float time;
+                    
+                    void main() {
+                        vColor = color;
+                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        gl_PointSize = size * (300.0 / -mvPosition.z) * (1.0 + sin(time + position.x) * 0.1);
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vColor;
+                    
+                    void main() {
+                        float distance = length(gl_PointCoord - vec2(0.5));
+                        if (distance > 0.5) discard;
+                        gl_FragColor = vec4(vColor, 1.0 - distance * 2.0);
+                    }
+                `,
+                transparent: true,
+                vertexColors: true
+            });
+
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            particles.visible = false;
+            scene.add(particles);
+
+            camera.position.z = 5;
+
+            animateSplash();
+        }
+
+        function animateSplash() {
+            let startTime = Date.now();
+            let phase = 0;
+
+            function animate() {
+                if (splashComplete) return;
+
+                const elapsed = (Date.now() - startTime) / 1000;
+                
+                if (phase === 0 && elapsed < 2) {
+                    logo.material.opacity = Math.min(elapsed / 2, 1);
+                    logo.rotation.z = Math.sin(elapsed * 2) * 0.1;
+                    
+                    if (elapsed > 1.5) {
+                        particles.visible = true;
+                        particles.material.uniforms.time.value = elapsed;
+                    }
+                } else if (phase === 0) {
+                    phase = 1;
+                    startTime = Date.now();
+                }
+
+                if (phase === 1 && elapsed < 1) {
+                    particles.material.uniforms.time.value += 0.1;
+                    particles.rotation.y += 0.02;
+                    particles.rotation.x += 0.01;
+                } else if (phase === 1) {
+                    phase = 2;
+                    startTime = Date.now();
+                }
+
+                if (phase === 2) {
+                    const fadeProgress = elapsed / 0.5;
+                    logo.material.opacity = Math.max(1 - fadeProgress, 0);
+                    
+                    if (fadeProgress >= 1) {
+                        completeSplash();
+                        return;
+                    }
+                }
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        function completeSplash() {
+            splashComplete = true;
+            document.getElementById('splash-screen').style.opacity = '0';
+            
+            setTimeout(() => {
+                document.getElementById('splash-screen').style.display = 'none';
+                document.getElementById('main-content').classList.add('show');
+                initParticlesBackground();
+            }, 500);
+        }
+
+        function initParticlesBackground() {
+            const canvas = document.getElementById('particles-bg');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2 + 1
+                });
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+
+                particles.forEach(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+
+                    if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+                    if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animateParticles);
+            }
+
+            animateParticles();
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('open');
+        }
+
+        function checkAuth() {
+            auth.onAuthStateChanged(user => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                if (user.email === 'supremacybaggy@gmail.com') {
+                    document.getElementById('admin-link').style.display = 'block';
+                }
+
+                loadSiteConfig();
+                loadProducts();
+            });
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            });
+        }
+
+        function loadSiteConfig() {
+            database.ref('config').once('value', snapshot => {
+                const config = snapshot.val();
+                if (config) {
+                    if (config.logoUrl) {
+                        document.getElementById('header-logo').src = config.logoUrl;
+                    }
+                    
+                    const bannerSection = document.getElementById('banner-section');
+                    const productsSection = document.getElementById('products-section');
+                    
+                    if (config.bannerUrl && config.bannerUrl.trim() !== '') {
+                        document.getElementById('banner-image').src = config.bannerUrl;
+                        bannerSection.classList.add('active');
+                        productsSection.classList.remove('no-banner');
+                    } else {
+                        bannerSection.classList.remove('active');
+                        productsSection.classList.add('no-banner');
+                    }
+                }
+            });
+        }
+
+        function loadProducts() {
+            const container = document.getElementById('products-container');
+            
+            database.ref('products').orderByChild('active').equalTo(true).once('value', snapshot => {
+                const products = snapshot.val();
+                
+                if (!products) {
+                    container.innerHTML = '<p style="text-align: center; color: #666;">Nenhum produto encontrado.</p>';
+                    return;
+                }
+
+                let html = '<div class="products-grid">';
+                
+                Object.values(products).forEach(product => {
+                    const variations = product.variations || {};
+                    const colors = variations.cores || [];
+                    const sizes = variations.tamanhos || [];
+                    
+                    html += `
+                        <div class="product-card" onclick="viewProduct('${product.id}')">
+                            <div class="product-image">
+                                <img src="${product.images[0] || '/placeholder.svg?height=250&width=280'}" 
+                                     alt="${product.title}" loading="lazy">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">${product.title}</h3>
+                                <div class="product-price">R$ ${product.price.toFixed(2)}</div>
+                                <p class="product-description">${product.description.substring(0, 100)}...</p>
+                                <div class="product-variations">
+                                    ${colors.slice(0, 3).map(color => `<span class="variation-item">${color}</span>`).join('')}
+                                    ${sizes.slice(0, 2).map(size => `<span class="variation-item">${size}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+
+                analytics.logEvent('view_item_list', {
+                    item_list_name: 'home_products'
+                });
+            });
+        }
+
+        function viewProduct(productId) {
+            window.location.href = `produto.html#${productId}`;
+        }
+
+        window.addEventListener('resize', () => {
+            if (renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            const canvas = document.getElementById('particles-bg');
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initSplash();
+            checkAuth();
+        });
+    </script>
+</body>
+</html>
