@@ -48,7 +48,7 @@
         .header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
-            padding: 1rem;
+            padding: 0.25rem 1rem; /* Atualizado de 0.5rem */
             position: sticky;
             top: 0;
             z-index: 100;
@@ -56,24 +56,26 @@
 
         .header-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Alterado de space-between */
             align-items: center;
             max-width: 1400px;
             margin: 0 auto;
             gap: 1rem;
+            position: relative; /* Adicionado */
         }
 
         .header-left {
+            position: absolute; /* Adicionado */
+            left: 0; /* Adicionado */
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            flex: 1;
-            min-width: 0;
         }
 
         .logo {
-            height: 35px;
-            filter: invert(1);
+            height: 120px; /* Alterado de 80px */
+            max-width: 400px; /* Adicionado */
+            object-fit: contain; /* Adicionado */
             flex-shrink: 0;
         }
 
@@ -112,7 +114,9 @@
 
         /* Dropdown menu */
         .header-menu {
-            position: relative;
+            position: relative; /* Alterado de absolute para relative */
+            position: absolute; /* Adicionado */
+            right: 0; /* Adicionado */
         }
 
         .dropdown-menu {
@@ -168,7 +172,7 @@
         .admin-layout {
             display: grid;
             grid-template-columns: 250px 1fr;
-            min-height: calc(100vh - 80px);
+            min-height: calc(100vh - 80px); /* Ajustado para o novo header height */
         }
 
         /* Sidebar - Melhorada para mobile */
@@ -906,9 +910,9 @@
 
             .sidebar {
                 position: fixed;
-                top: 60px;
+                top: 60px; /* Ajustado para o novo header height */
                 left: -250px;
-                height: calc(100vh - 60px);
+                height: calc(100vh - 60px); /* Ajustado para o novo header height */
                 width: 250px;
                 z-index: 1000;
                 box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
@@ -991,7 +995,7 @@
 
         @media (max-width: 480px) {
             .logo {
-                height: 30px;
+                height: 30px; /* Mantido o valor original para consistência em telas pequenas */
             }
 
             .section-title {
@@ -1058,9 +1062,9 @@
                         <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                 </button>
-                <img src="https://i.imgur.com/ZMOggly.png" alt="Supremacy Baggy" class="logo" id="header-logo">
-                <h1 class="admin-title">Painel Admin</h1>
             </div>
+            
+            <img src="https://i.imgur.com/ZMOggly.png" alt="Supremacy Baggy" class="logo" id="header-logo">
             
             <div class="header-menu">
                 <button class="menu-toggle" onclick="toggleDropdown()">
@@ -1159,7 +1163,7 @@
             <section id="site-config" class="section">
                 <h2 class="section-title">Configurações do Site</h2>
                 
-                 <CHANGE> 
+                 
                 <div class="card">
                     <h3 class="card-title">Banner da Página Inicial</h3>
                     <div id="banner-message"></div>
@@ -1205,7 +1209,7 @@
                             <input type="url" class="form-input" id="logo-url" 
                                    placeholder="https://exemplo.com/logo.png">
                             <small style="color: var(--text-muted); font-size: 0.9rem;">
-                                Recomendado: PNG transparente, altura máxima 60px
+                                Recomendado: PNG transparente, suporta até 1062×297px
                             </small>
                         </div>
                         
@@ -1309,7 +1313,7 @@
                                            placeholder="Ex: Camiseta Oversized" required>
                                 </div>
                                 
-                                 <CHANGE> 
+                                 
                                 <div class="form-group">
                                     <label class="form-label">Preço Normal (R$) *</label>
                                     <input type="number" class="form-input" id="product-price" 
@@ -1447,7 +1451,7 @@
         </main>
     </div>
 
-     <CHANGE> 
+     
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1477,7 +1481,7 @@
                     </svg>
                     Excluir
                 </button>
-                <button class="btn btn-secondary" onclick="closeProductModal()">Fechar</button>
+                <button class="btn btn-secondary" onclick="closeProductModal()"> Fechar</button>
             </div>
         </div>
     </div>

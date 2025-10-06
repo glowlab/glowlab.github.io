@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Supremacy Baggy</title>
+    <meta name="description" content="Seu perfil - Supremacy Baggy">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Oswald', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #333;
+        }
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .logo {
+            height: 120px;
+            max-width: 400px;
+            object-fit: contain;
+        }
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            position: absolute;
+            right: 0;
+        }
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: #000;
+            border-left: 1px solid #333;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            padding: 2rem;
+        }
+        .nav-menu.open {
+            right: 0;
+        }
+        .nav-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 2rem;
+        }
+        .nav-links {
+            list-style: none;
+        }
+        .nav-links li {
+            margin-bottom: 1rem;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #ccc;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: calc(100vh - 80px);
+        }
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .profile-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #333;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #666;
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        .profile-email {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: #ccc;
+        }
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Oswald', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #fff;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+        .form-input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+        .btn-primary {
+            background: #fff;
+            color: #000;
+        }
+        .btn-primary:hover {
+            background: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+        .btn-secondary:hover {
+            background: #fff;
+            color: #000;
+        }
+        .btn-danger {
+            background: transparent;
+            color: #dc3545;
+            border: 2px solid #dc3545;
+        }
+        .btn-danger:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .message {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+        }
+        .error-message {
+            background: rgba(220, 53, 69, 0.15);
+            border: 1px solid #dc3545;
+            color: #dc3545;
+        }
+        .success-message {
+            background: rgba(40, 167, 69, 0.15);
+            border: 1px solid #28a745;
+            color: #28a745;
+        }
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+            .header {
+                padding: 1rem;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <img src="https://i.imgur.com/ZMOggly.png" alt="Supremacy Baggy" class="logo" id="header-logo">
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        </div>
+    </header>
+    <nav class="nav-menu" id="nav-menu">
+        <button class="nav-close" onclick="toggleMenu()">✕</button>
+        <ul class="nav-links">
+            <li><a href="paginahome.html">Home</a></li>
+            <li><a href="categorias.html">Categorias</a></li>
+            <li><a href="produtosgeral.html">Produtos</a></li>
+            <li><a href="favoritos.html">Favoritos</a></li>
+            <li><a href="carrinho.html">Carrinho</a></li>
+            <li><a href="perfil.html">Perfil</a></li>
+            <li id="admin-link" style="display: none;"><a href="paineladmin.html">Painel Admin</a></li>
+            <li><a href="#" onclick="logout()">Sair</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <h1 class="page-title">Meu Perfil</h1>
+        <div id="profile-content">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbGwo74XhjxyorPEvz3WHZgGV6BESGZw8",
+            authDomain: "supbaggy.firebaseapp.com",
+            databaseURL: "https://supbaggy-default-rtdb.firebaseio.com",
+            projectId: "supbaggy",
+            storageBucket: "supbaggy.firebasestorage.app",
+            messagingSenderId: "304795544101",
+            appId: "1:304795544101:web:5de2ecc82c07fd9fe42dcc"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const analytics = firebase.analytics();
+        let currentUser = null;
+        let userStats = {
+            wishlistCount: 0,
+            cartCount: 0,
+            ordersCount: 0
+        };
+        function checkAuth() {
+            auth.onAuthStateChanged(user => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                currentUser = user;
+                if (user.email === 'supremacybaggy@gmail.com') {
+                    document.getElementById('admin-link').style.display = 'block';
+                }
+                loadSiteConfig();
+                loadProfile();
+                loadStats();
+            });
+        }
+        function loadSiteConfig() {
+            database.ref('config').once('value', snapshot => {
+                const config = snapshot.val();
+                if (config && config.logoUrl) {
+                    document.getElementById('header-logo').src = config.logoUrl;
+                }
+            });
+        }
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('open');
+        }
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            });
+        }
+        function loadProfile() {
+            const container = document.getElementById('profile-content');
+            const email = currentUser.email;
+            const displayName = currentUser.displayName || email.split('@')[0];
+            const initial = displayName.charAt(0).toUpperCase();
+            container.innerHTML = `
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">${initial}</div>
+                        <div class="profile-info">
+                            <h2 class="profile-name">${displayName}</h2>
+                            <p class="profile-email">${email}</p>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="wishlist-count">0</div>
+                            <div class="stat-label">Favoritos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="cart-count">0</div>
+                            <div class="stat-label">No Carrinho</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="orders-count">0</div>
+                            <div class="stat-label">Pedidos</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <h3 class="section-title">Alterar Senha</h3>
+                    <div id="password-message" class="message"></div>
+                    <form id="password-form" onsubmit="changePassword(event)">
+                        <div class="form-group">
+                            <label class="form-label">Nova Senha</label>
+                            <input type="password" class="form-input" id="new-password" 
+                                   placeholder="Digite a nova senha" minlength="6" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirmar Senha</label>
+                            <input type="password" class="form-input" id="confirm-password" 
+                                   placeholder="Confirme a nova senha" minlength="6" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Alterar Senha</button>
+                    </form>
+                </div>
+                <div class="profile-card">
+                    <h3 class="section-title">Ações da Conta</h3>
+                    <button class="btn btn-secondary" onclick="goToOrders()">Ver Pedidos</button>
+                    <button class="btn btn-danger" onclick="deleteAccount()">Excluir Conta</button>
+                </div>
+            `;
+        }
+        function loadStats() {
+            if (!currentUser) return;
+            database.ref(`users/${currentUser.uid}/wishlist`).on('value', snapshot => {
+                const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+                userStats.wishlistCount = count;
+                updateStatsDisplay();
+            });
+            database.ref(`users/${currentUser.uid}/cart`).on('value', snapshot => {
+                const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+                userStats.cartCount = count;
+                updateStatsDisplay();
+            });
+        }
+        function updateStatsDisplay() {
+            const wishlistEl = document.getElementById('wishlist-count');
+            const cartEl = document.getElementById('cart-count');
+            const ordersEl = document.getElementById('orders-count');
+            if (wishlistEl) wishlistEl.textContent = userStats.wishlistCount;
+            if (cartEl) cartEl.textContent = userStats.cartCount;
+            if (ordersEl) ordersEl.textContent = userStats.ordersCount;
+        }
+        function changePassword(event) {
+            event.preventDefault();
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const messageEl = document.getElementById('password-message');
+            if (newPassword !== confirmPassword) {
+                showMessage(messageEl, 'As senhas não coincidem', 'error');
+                return;
+            }
+            if (newPassword.length < 6) {
+                showMessage(messageEl, 'A senha deve ter pelo menos 6 caracteres', 'error');
+                return;
+            }
+            currentUser.updatePassword(newPassword)
+                .then(() => {
+                    showMessage(messageEl, 'Senha alterada com sucesso!', 'success');
+                    document.getElementById('password-form').reset();
+                    analytics.logEvent('password_changed');
+                })
+                .catch(error => {
+                    if (error.code === 'auth/requires-recent-login') {
+                        showMessage(messageEl, 'Por segurança, faça login novamente para alterar a senha', 'error');
+                    } else {
+                        showMessage(messageEl, 'Erro ao alterar senha: ' + error.message, 'error');
+                    }
+                });
+        }
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = `message ${type}-message`;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        function goToOrders() {
+            alert('Funcionalidade de pedidos em desenvolvimento');
+        }
+        function deleteAccount() {
+            if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) return;
+            if (!confirm('Todos os seus dados serão permanentemente removidos. Confirma a exclusão?')) return;
+            database.ref(`users/${currentUser.uid}`).remove()
+                .then(() => {
+                    return currentUser.delete();
+                })
+                .then(() => {
+                    analytics.logEvent('account_deleted');
+                    alert('Conta excluída com sucesso');
+                    window.location.href = 'login.html';
+                })
+                .catch(error => {
+                    if (error.code === 'auth/requires-recent-login') {
+                        alert('Por segurança, faça login novamente para excluir a conta');
+                        auth.signOut().then(() => {
+                            window.location.href = 'login.html';
+                        });
+                    } else {
+                        alert('Erro ao excluir conta: ' + error.message);
+                    }
+                });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+        });
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                database.ref(`users/${currentUser.uid}/wishlist`).off();
+                database.ref(`users/${currentUser.uid}/cart`).off();
+            }
+        });
+    </script>
+</body>
+</html>

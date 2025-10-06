@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favoritos - Supremacy Baggy</title>
+    <meta name="description" content="Seus produtos favoritos - Supremacy Baggy">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Oswald', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #333;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            height: 40px;
+            filter: invert(1);
+        }
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .btn-icon {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .btn-icon:hover {
+            background: #333;
+            transform: scale(1.1);
+        }
+        .btn-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: calc(100vh - 80px);
+        }
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .wishlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+        .wishlist-count {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        .clear-wishlist {
+            background: transparent;
+            border: 1px solid #666;
+            color: #666;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .clear-wishlist:hover {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .product-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        .product-actions {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .product-card:hover .product-actions {
+            opacity: 1;
+        }
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        .action-btn:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.1);
+        }
+        .action-btn.remove:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+        .action-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        .product-info {
+            padding: 1.5rem;
+        }
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .empty-wishlist {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+        .empty-wishlist-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        .empty-wishlist-icon svg {
+            width: 80px;
+            height: 80px;
+            fill: currentColor;
+        }
+        .empty-wishlist h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        .empty-wishlist p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: #fff;
+            color: #000;
+        }
+        .btn-primary:hover {
+            background: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+            .header {
+                padding: 1rem;
+            }
+            .products-grid {
+                gap: 1rem;
+            }
+            .product-info {
+                padding: 0.8rem;
+            }
+            .product-title {
+                font-size: 0.95rem;
+            }
+            .product-price {
+                font-size: 1.1rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <img src="https://i.imgur.com/ZMOggly.png" alt="Supremacy Baggy" class="logo" id="header-logo">
+            <div class="header-actions">
+                <button class="btn-icon" onclick="goToProducts()" title="Continuar comprando">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/>
+                    </svg>
+                </button>
+                <button class="btn-icon" onclick="goToCart()" title="Carrinho">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title">Meus Favoritos</h1>
+        <div id="wishlist-content">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbGwo74XhjxyorPEvz3WHZgGV6BESGZw8",
+            authDomain: "supbaggy.firebaseapp.com",
+            databaseURL: "https://supbaggy-default-rtdb.firebaseio.com",
+            projectId: "supbaggy",
+            storageBucket: "supbaggy.firebasestorage.app",
+            messagingSenderId: "304795544101",
+            appId: "1:304795544101:web:5de2ecc82c07fd9fe42dcc"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const analytics = firebase.analytics();
+        let currentUser = null;
+        let wishlistItems = {};
+        function checkAuth() {
+            auth.onAuthStateChanged(user => {
+                if (!user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                currentUser = user;
+                loadSiteConfig();
+                loadWishlist();
+            });
+        }
+        function loadSiteConfig() {
+            database.ref('config').once('value', snapshot => {
+                const config = snapshot.val();
+                if (config && config.logoUrl) {
+                    document.getElementById('header-logo').src = config.logoUrl;
+                }
+            });
+        }
+        function loadWishlist() {
+            if (!currentUser) return;
+            database.ref(`users/${currentUser.uid}/wishlist`).on('value', snapshot => {
+                wishlistItems = snapshot.val() || {};
+                renderWishlist();
+                if (Object.keys(wishlistItems).length > 0) {
+                    analytics.logEvent('view_wishlist', {
+                        item_count: Object.keys(wishlistItems).length
+                    });
+                }
+            });
+        }
+        function renderWishlist() {
+            const container = document.getElementById('wishlist-content');
+            const items = Object.values(wishlistItems);
+            if (items.length === 0) {
+                renderEmptyWishlist();
+                return;
+            }
+            container.innerHTML = `
+                <div class="wishlist-header">
+                    <div class="wishlist-count">${items.length} produto${items.length !== 1 ? 's' : ''} favorito${items.length !== 1 ? 's' : ''}</div>
+                    <button class="clear-wishlist" onclick="clearWishlist()">Limpar Favoritos</button>
+                </div>
+                <div class="products-grid">
+                    ${items.map(item => renderWishlistItem(item)).join('')}
+                </div>
+            `;
+        }
+        function renderWishlistItem(item) {
+            return `
+                <div class="product-card" onclick="viewProduct('${item.id}')">
+                    <div class="product-image">
+                        <img src="${item.image || '/placeholder.svg?height=200&width=280'}" 
+                             alt="${item.title}" loading="lazy">
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="event.stopPropagation(); addToCart('${item.id}')" title="Adicionar ao carrinho">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                                </svg>
+                            </button>
+                            <button class="action-btn remove" onclick="event.stopPropagation(); removeFromWishlist('${item.id}')" title="Remover">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${item.title}</h3>
+                        <div class="product-price">R$ ${item.price.toFixed(2)}</div>
+                    </div>
+                </div>
+            `;
+        }
+        function renderEmptyWishlist() {
+            document.getElementById('wishlist-content').innerHTML = `
+                <div class="empty-wishlist">
+                    <div class="empty-wishlist-icon">
+                        <svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <h2>Sua lista de favoritos está vazia</h2>
+                    <p>Adicione produtos que você ama para encontrá-los facilmente depois!</p>
+                    <button class="btn btn-primary" onclick="goToProducts()">
+                        Explorar Produtos
+                    </button>
+                </div>
+            `;
+        }
+        function removeFromWishlist(itemId) {
+            if (!currentUser) return;
+            database.ref(`users/${currentUser.uid}/wishlist/${itemId}`).remove();
+            analytics.logEvent('remove_from_wishlist', {
+                item_id: itemId
+            });
+        }
+        function clearWishlist() {
+            if (!confirm('Tem certeza que deseja limpar todos os favoritos?')) return;
+            database.ref(`users/${currentUser.uid}/wishlist`).remove();
+            analytics.logEvent('clear_wishlist');
+        }
+        function addToCart(itemId) {
+            const item = wishlistItems[itemId];
+            if (!item) return;
+            database.ref(`products/${itemId}`).once('value', snapshot => {
+                const product = snapshot.val();
+                if (!product) return;
+                const cartItem = {
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.images[0],
+                    quantity: 1,
+                    variations: {},
+                    frete: product.frete,
+                    addedAt: firebase.database.ServerValue.TIMESTAMP
+                };
+                database.ref(`users/${currentUser.uid}/cart/${itemId}`).set(cartItem).then(() => {
+                    alert('Produto adicionado ao carrinho!');
+                    analytics.logEvent('add_to_cart', {
+                        item_id: product.id,
+                        item_name: product.title,
+                        price: product.price,
+                        quantity: 1
+                    });
+                });
+            });
+        }
+        function viewProduct(productId) {
+            window.location.href = `produto.html#${productId}`;
+        }
+        function goToProducts() {
+            window.location.href = 'produtosgeral.html';
+        }
+        function goToCart() {
+            window.location.href = 'carrinho.html';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+        });
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                database.ref(`users/${currentUser.uid}/wishlist`).off();
+            }
+        });
+    </script>
+</body>
+</html>

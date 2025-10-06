@@ -23,7 +23,6 @@
             line-height: 1.6;
         }
 
-        /* Header */
         .header {
             position: fixed;
             top: 0;
@@ -38,15 +37,17 @@
 
         .header-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
 
         .logo {
-            height: 40px;
-            filter: invert(1);
+            height: 120px;
+            max-width: 400px;
+            object-fit: contain;
         }
 
         .menu-toggle {
@@ -56,9 +57,10 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+            position: absolute;
+            right: 0;
         }
 
-        /* Navigation Menu */
         .nav-menu {
             position: fixed;
             top: 0;
@@ -107,7 +109,6 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        /* Main Content */
         .main-content {
             margin-top: 80px;
             padding: 2rem;
@@ -117,19 +118,18 @@
         }
 
         .page-title {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
             text-transform: uppercase;
             letter-spacing: 3px;
         }
 
-        /* Categories Grid */
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
             margin-bottom: 3rem;
         }
 
@@ -141,7 +141,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
-            height: 250px;
+            height: 220px;
         }
 
         .category-card:hover {
@@ -187,7 +187,7 @@
         }
 
         .category-title {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
@@ -195,43 +195,42 @@
         }
 
         .category-count {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #ccc;
             font-weight: 400;
         }
 
         .category-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
             opacity: 0.8;
         }
 
         .category-icon svg {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             fill: currentColor;
         }
 
-        /* Filters */
         .filters-section {
             background: #111;
             border: 1px solid #333;
             border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 3rem;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
         }
 
         .filters-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             text-transform: uppercase;
         }
 
         .filters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
         }
 
         .filter-group {
@@ -240,21 +239,21 @@
         }
 
         .filter-label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .filter-select {
-            padding: 0.8rem;
+            padding: 0.7rem;
             background: #222;
             border: 1px solid #444;
             border-radius: 4px;
             color: #fff;
             font-family: 'Oswald', sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .filter-select:focus {
@@ -262,20 +261,19 @@
             border-color: #fff;
         }
 
-        /* Products Section */
         .products-section {
-            margin-top: 3rem;
+            margin-top: 2.5rem;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .section-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -307,6 +305,12 @@
             fill: currentColor;
         }
 
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
         .product-card {
             background: #111;
             border: 1px solid #333;
@@ -324,7 +328,7 @@
 
         .product-image {
             width: 100%;
-            height: 250px;
+            aspect-ratio: 1/1;
             background: #222;
             display: flex;
             align-items: center;
@@ -344,31 +348,30 @@
         }
 
         .product-info {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .product-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
         }
 
         .product-price {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .product-category {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #666;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* List view styles */
         .product-card.list-view {
             display: flex;
             height: 150px;
@@ -386,7 +389,6 @@
             justify-content: center;
         }
 
-        /* Loading */
         .loading {
             display: flex;
             align-items: center;
@@ -408,7 +410,16 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Responsive */
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .main-content {
                 padding: 1rem;
@@ -419,12 +430,15 @@
             }
 
             .categories-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 1.5rem;
+                gap: 1rem;
+            }
+
+            .category-card {
+                height: 180px;
             }
 
             .category-title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
 
             .filters-grid {
@@ -437,6 +451,22 @@
                 align-items: flex-start;
             }
 
+            .products-grid {
+                gap: 1rem;
+            }
+
+            .product-info {
+                padding: 0.8rem;
+            }
+
+            .product-title {
+                font-size: 0.95rem;
+            }
+
+            .product-price {
+                font-size: 1.1rem;
+            }
+
             .product-card.list-view {
                 flex-direction: column;
                 height: auto;
@@ -444,7 +474,53 @@
 
             .product-card.list-view .product-image {
                 width: 100%;
-                height: 200px;
+                height: 180px;
+            }
+
+            .product-card.list-view .product-actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-card {
+                height: 150px;
+            }
+
+            .category-icon svg {
+                width: 35px;
+                height: 35px;
+            }
+
+            .category-title {
+                font-size: 1.1rem;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .products-grid {
+                gap: 0.75rem;
+            }
+
+            .product-info {
+                padding: 0.6rem;
+            }
+
+            .product-title {
+                font-size: 0.85rem;
+            }
+
+            .product-price {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
@@ -461,7 +537,6 @@
             </button>
         </div>
     </header>
-
 
     <nav class="nav-menu" id="nav-menu">
         <button class="nav-close" onclick="toggleMenu()">
@@ -484,14 +559,12 @@
     <main class="main-content">
         <h1 class="page-title">Categorias</h1>
         
-    
         <section class="categories-grid" id="categories-container">
             <div class="loading">
                 <div class="spinner"></div>
             </div>
         </section>
 
-    
         <section class="filters-section">
             <h2 class="filters-title">Filtros</h2>
             <div class="filters-grid">
@@ -523,7 +596,6 @@
             </div>
         </section>
 
-    
         <section class="products-section">
             <div class="section-header">
                 <h2 class="section-title" id="products-title">Todos os Produtos</h2>
@@ -548,14 +620,12 @@
         </section>
     </main>
 
-
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
 
     <script>
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCbGwo74XhjxyorPEvz3WHZgGV6BESGZw8",
             authDomain: "supbaggy.firebaseapp.com",
@@ -566,7 +636,6 @@
             appId: "1:304795544101:web:5de2ecc82c07fd9fe42dcc"
         };
 
-        // Initialize Firebase
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -575,14 +644,12 @@
         const database = firebase.database();
         const analytics = firebase.analytics();
 
-        // Global variables
         let allProducts = [];
         let filteredProducts = [];
         let categories = {};
         let currentView = 'grid';
         let currentUser = null;
 
-        // Auth check
         function checkAuth() {
             auth.onAuthStateChanged(user => {
                 if (!user) {
@@ -592,7 +659,6 @@
                 
                 currentUser = user;
                 
-                // Check if admin
                 if (user.email === 'supremacybaggy@gmail.com') {
                     document.getElementById('admin-link').style.display = 'block';
                 }
@@ -602,7 +668,6 @@
             });
         }
 
-        // Load site configuration
         function loadSiteConfig() {
             database.ref('config').once('value', snapshot => {
                 const config = snapshot.val();
@@ -612,7 +677,6 @@
             });
         }
 
-        // Menu functions
         function toggleMenu() {
             const menu = document.getElementById('nav-menu');
             menu.classList.toggle('open');
@@ -624,7 +688,6 @@
             });
         }
 
-        // Load products
         function loadProducts() {
             database.ref('products').orderByChild('active').equalTo(true).once('value', snapshot => {
                 const products = snapshot.val();
@@ -643,7 +706,6 @@
             });
         }
 
-        // Process categories
         function processCategories() {
             categories = {};
             
@@ -661,17 +723,16 @@
             });
         }
 
-        // Render categories
         function renderCategories() {
             const container = document.getElementById('categories-container');
             
             const categoryIcons = {
-                'Camisetas': '<svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor"><path d="M16 21v-2l1.54-1.54C16.6 16.6 16 15.42 16 14V8c0-2.21-1.79-4-4-4s-4 1.79-4 4v6c0 1.42-.6 2.6-1.54 3.46L8 19v2H6v-2.17c-1.16-1.16-2-2.78-2-4.83V8c0-3.31 2.69-6 6-6s6 2.69 6 6v6c0 2.05-.84 3.67-2 4.83V21h-2z"/></svg>',
-                'Calças': '<svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor"><path d="M16.5 3h-9C6.67 3 6 3.67 6 4.5v15c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5V13h2v6.5c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM11 19H8V5h3v14zm9 0h-3V5h3v14z"/></svg>',
-                'Acessórios': '<svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor"><path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"/><path d="M12 10.5c-1.38 0-2.5.5-3.5 1.41V3H4v5h5V6.5c.55-.61 1.35-1 2.5-1 1.93 0 3.5 1.57 3.5 3.5v.5h-2v2h2v2h-2v2h2v2h-2v2h9V9.5C20 5.91 16.59 3 12 3z"/></svg>',
-                'Tênis': '<svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor"><path d="M12.5 3c-1.28 0-2.5.5-3.5 1.41V3H4v5h5V6.5c.55-.61 1.35-1 2.5-1 1.93 0 3.5 1.57 3.5 3.5v.5h-2v2h2v2h-2v2h2v2h-2v2h9V9.5C20 5.91 16.59 3 12.5 3z"/></svg>',
-                'Bonés': '<svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/></svg>',
-                'Outros': '<svg viewBox="0 0 24 24" width="60" height="60" fill="currentColor"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/></svg>'
+                'Camisetas': '<svg viewBox="0 0 24 24" width="50" height="50" fill="currentColor"><path d="M16 21v-2l1.54-1.54C16.6 16.6 16 15.42 16 14V8c0-2.21-1.79-4-4-4s-4 1.79-4 4v6c0 1.42-.6 2.6-1.54 3.46L8 19v2H6v-2.17c-1.16-1.16-2-2.78-2-4.83V8c0-3.31 2.69-6 6-6s6 2.69 6 6v6c0 2.05-.84 3.67-2 4.83V21h-2z"/></svg>',
+                'Calças': '<svg viewBox="0 0 24 24" width="50" height="50" fill="currentColor"><path d="M16.5 3h-9C6.67 3 6 3.67 6 4.5v15c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5V13h2v6.5c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"/></svg>',
+                'Acessórios': '<svg viewBox="0 0 24 24" width="50" height="50" fill="currentColor"><path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 15H4V8h16v11z"/></svg>',
+                'Tênis': '<svg viewBox="0 0 24 24" width="50" height="50" fill="currentColor"><path d="M12.5 3c-1.28 0-2.5.5-3.5 1.41V3H4v5h5V6.5c.55-.61 1.35-1 2.5-1 1.93 0 3.5 1.57 3.5 3.5v.5h-2v2h2v2h-2v2h2v2h-2v2h9V9.5C20 5.91 16.59 3 12.5 3z"/></svg>',
+                'Bonés': '<svg viewBox="0 0 24 24" width="50" height="50" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8zm-5-9h10v2H7z"/></svg>',
+                'Outros': '<svg viewBox="0 0 24 24" width="50" height="50" fill="currentColor"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/></svg>'
             };
             
             let html = '';
@@ -695,11 +756,9 @@
             container.innerHTML = html;
         }
 
-        // Populate filters
         function populateFilters() {
             const categoryFilter = document.getElementById('category-filter');
             
-            // Clear existing options (except "All")
             categoryFilter.innerHTML = '<option value="">Todas as categorias</option>';
             
             Object.keys(categories).forEach(categoryName => {
@@ -710,18 +769,15 @@
             });
         }
 
-        // Filter by category
         function filterByCategory(categoryName) {
             document.getElementById('category-filter').value = categoryName;
             applyFilters();
             
-            // Scroll to products section
             document.querySelector('.products-section').scrollIntoView({ 
                 behavior: 'smooth' 
             });
         }
 
-        // Apply filters
         function applyFilters() {
             const categoryFilter = document.getElementById('category-filter').value;
             const priceFilter = document.getElementById('price-filter').value;
@@ -729,14 +785,12 @@
             
             filteredProducts = [...allProducts];
             
-            // Category filter
             if (categoryFilter) {
                 filteredProducts = filteredProducts.filter(product => 
                     product.category === categoryFilter
                 );
             }
             
-            // Price filter
             if (priceFilter) {
                 const [min, max] = priceFilter.split('-').map(p => p === '+' ? Infinity : parseFloat(p));
                 filteredProducts = filteredProducts.filter(product => {
@@ -745,7 +799,6 @@
                 });
             }
             
-            // Sort
             switch (sortFilter) {
                 case 'name':
                     filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
@@ -765,7 +818,6 @@
             updateProductsTitle(categoryFilter);
         }
 
-        // Update products title
         function updateProductsTitle(category) {
             const title = document.getElementById('products-title');
             if (category) {
@@ -775,11 +827,9 @@
             }
         }
 
-        // Set view
         function setView(view) {
             currentView = view;
             
-            // Update buttons
             document.querySelectorAll('.view-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -788,7 +838,6 @@
             renderProducts();
         }
 
-        // Render products
         function renderProducts() {
             const container = document.getElementById('products-container');
             const products = filteredProducts.length > 0 ? filteredProducts : allProducts;
@@ -807,7 +856,7 @@
                     <div class="product-card ${currentView === 'list' ? 'list-view' : ''}" 
                          onclick="viewProduct('${product.id}')">
                         <div class="product-image">
-                            <img src="${product.images[0] || '/placeholder.svg?height=250&width=280'}" 
+                            <img src="${product.images[0] || '/placeholder.svg?height=200&width=280'}" 
                                  alt="${product.title}" loading="lazy">
                         </div>
                         <div class="product-info">
@@ -821,26 +870,21 @@
             
             container.innerHTML = html;
             
-            // Analytics
             analytics.logEvent('view_item_list', {
                 item_list_name: 'categories_page'
             });
         }
 
-        // View product
         function viewProduct(productId) {
             window.location.href = `produto.html#${productId}`;
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
             
-            // Set initial filtered products
             filteredProducts = allProducts;
         });
 
-        // Handle URL hash for direct category access
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.substring(1);
             if (hash && categories[hash]) {
@@ -848,7 +892,6 @@
             }
         });
 
-        // Check for category in URL on load
         window.addEventListener('load', () => {
             const hash = window.location.hash.substring(1);
             if (hash) {
